@@ -8,12 +8,16 @@
  const mongoose = require('mongoose');
 
 
- const oportunidadePedido = new mongoose.Schema({
-   id_pedido: {Number}, // String is shorthand for {type: String}
-   title: {String},
-   value: {Number},
-   person_name: {String}
+ const oportunidadePedido = new mongoose.Schema(
+   {
+   id_pedido: Number, // String is shorthand for {type: String}
+   title: String,
+   value: Number,
+   person_name: String
    
- });
+ },
+ { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 
- module.exports = mongoose.model('OpPedido', oportunidadePedido);
+ const OpPedido = mongoose.model('OpPedido', oportunidadePedido);
+
+module.exports = OpPedido;

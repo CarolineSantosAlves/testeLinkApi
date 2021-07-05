@@ -10,6 +10,7 @@ const router = require('express-promise-router')();
 const oportunidadeController = require('../controllers/oportunidade.controllers');
 
 
-router.get('/pedidos', oportunidadeController.pedido);
+router.post('/pedidos', oportunidadeController.pedido);
+router.get('/pedidos', oportunidadeController.showPedidos);
 
 module.exports = router;

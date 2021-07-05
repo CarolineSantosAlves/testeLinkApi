@@ -28,9 +28,9 @@ exports.pedido =  async(req, res) => {
 
             try {
 
-                await function creteAndSavePedido (done){
-                   //if(!OpPedido.findById(pedidoPipe.id)){
-                        let pedidoSave = new OpPedido({
+                let pedidoBanco = await OpPedido.findOne({ id_pedido: pedidoPipe.id })
+                  if(!pedidoBanco){
+                        let pedidoSave = await new OpPedido({
                             id_pedido: pedidoPipe.id,
                             title: pedidoPipe.title,
                             value: pedidoPipe.value,
@@ -39,18 +39,15 @@ exports.pedido =  async(req, res) => {
     
                         pedidoSave.save(function (err, data){
                             if (err) return console.error(err);
-                            done(null, data)
+                            
                         });
 
-                  //  }
+                   }
 
                     
 
                     
-                }();
-                    
-
-                    
+                            
                 
             } catch (error) {
                 console.log('erro ao persistir dados', error)
@@ -58,10 +55,14 @@ exports.pedido =  async(req, res) => {
             }
         }
     }
-    
 
 
     return res.json(data)
 
+}
 
+exports.showPedidos = async(req, res) =>{
+    const allPedidos = await OpPedido.find()
+
+    return res.json(allPedidos)
 }
