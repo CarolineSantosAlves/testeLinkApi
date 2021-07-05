@@ -7,7 +7,7 @@
  */
 
 const db = require('../config/database');
-const { OpPedido } = require('../schema/oportunidade.schema');
+const OpPedido = require('../schema/oportunidade.schema');
 
 const axios = require('axios');
 const toXml = require('../../toxml');
@@ -28,23 +28,33 @@ exports.pedido =  async(req, res) => {
 
             try {
 
-               await function creteAndSavePedido (done){
-                    let pedidoSave = new OpPedido({
-                        id_pedido: pedidoPipe.id,
-                        title: pedidoPipe.title,
-                        value: pedidoPipe.value,
-                        person_name: pedidoPipe.person_name});
-
+                await function creteAndSavePedido (done){
+                   //if(!OpPedido.findById(pedidoPipe.id)){
+                        let pedidoSave = new OpPedido({
+                            id_pedido: pedidoPipe.id,
+                            title: pedidoPipe.title,
+                            value: pedidoPipe.value,
+                            person_name: pedidoPipe.person_name
+                        });
+    
                         pedidoSave.save(function (err, data){
-                        if (err) return console.error(err);
-                        done(null, data)
-                    });
+                            if (err) return console.error(err);
+                            done(null, data)
+                        });
+
+                  //  }
+
                     
-                }
-                
+
+                    
+                }();
+                    
+
+                    
                 
             } catch (error) {
                 console.log('erro ao persistir dados', error)
+                
             }
         }
     }
